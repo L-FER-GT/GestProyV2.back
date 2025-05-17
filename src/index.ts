@@ -8,8 +8,19 @@ dotenv.config();
 const app: Express = express();
 const port = process.env.PORT || 3000;
 
+// Alternativa más segura si necesitas incluir el frontend en Vercel:
+const corsOptions: cors.CorsOptions = {
+  origin: [
+    'https://gest-proy-v2-front.vercel.app',
+    'http://localhost:3000'
+  ],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true
+};
+
 // Middlewares
-app.use(cors());
+app.use(cors(corsOptions));
+app.use(express.json());
 app.use(bodyParser.json());
 
 // Rutas
@@ -17,10 +28,8 @@ app.get('/', (req: Request, res: Response) => {
   res.send('Backend con Vite + TypeScript funcionando!');
 });
 
-// Montar el router
-app.use('/usuarios', usuariosRouter); // Ahora la ruta será accesible en /usuarios
+app.use('/usuarios', usuariosRouter);
 
-// Inicia el servidor
 app.listen(port, () => {
   console.log(`⚡️ Servidor corriendo en http://localhost:${port}`);
 });
