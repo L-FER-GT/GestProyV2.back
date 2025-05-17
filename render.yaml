@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: mi-backend-render
+    name: gest-proy-v2-back
     runtime: node
     buildCommand: npm install && npm run build
     startCommand: npm start
